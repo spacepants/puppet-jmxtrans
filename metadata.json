@@ -7,6 +7,12 @@
   "source": "https://github.com/puppetlabs-operations/puppet-jmxtrans",
   "project_page": "https://github.com/puppetlabs-operations/puppet-jmxtrans",
   "issues_url": "https://github.com/puppetlabs-operations/puppet-jmxtrans/issues",
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 4.1.0 <5.0.0"
+    }
+  ],
   "dependencies": [
     {
       "name": "puppetlabs-stdlib",
@@ -17,14 +23,13 @@
     {
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
-        "6",
-        "7"
+        "7",
+        "8"
       ]
     },
     {
       "operatingsystem": "RedHat",
       "operatingsystemrelease": [
-        "5",
         "6",
         "7"
       ]

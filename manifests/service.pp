@@ -1,14 +1,16 @@
-# == Class jmxtrans::service
+# @private
 #
-# This class is meant to be called from jmxtrans.
-# It ensure the service is running.
+# This class manages the jmxtrans service. If `$::jmxtrans::service_name` is
+# undef, this class does nothing.
 #
 class jmxtrans::service {
+  include ::jmxtrans
 
-  service { $::jmxtrans::service_name:
-    ensure     => running,
-    enable     => true,
-    hasstatus  => true,
-    hasrestart => true,
+  if $::jmxtrans::service_name {
+    service { $::jmxtrans::service_name:
+      ensure     => running,
+      hasstatus  => true,
+      hasrestart => true,
+    }
   }
 }

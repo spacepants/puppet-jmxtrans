@@ -1,24 +1,49 @@
-# Class: jmxtrans
-# ===========================
+# This is the main class for using jmxtrans. It should be included before using
+# anything else from the module.
 #
-# Full description of class jmxtrans here.
+# @example jmxtrans is installed via some other method
+#    include jmxtrans
 #
-# Parameters
-# ----------
+# @example jmxtrans is available in a repository via the package `jmxtrans`
+#    class { 'jmxtrans':
+#      package_name => 'jmxtrans',
+#      service_name => 'jmxtrans',
+#    }
 #
-# * `sample parameter`
-#   Explanation of what this parameter affects and what it defaults to.
-#   e.g. "Specify one or more upstream ntp servers as an array."
+# @example jmxtrans should be installed via rpm installing a remote package
+#    class { 'jmxtrans':
+#      package_name  => 'jmxtrans',
+#      service_name  => 'jmxtrans',
+#      package_source => 'http://central.maven.org/maven2/org/jmxtrans/jmxtrans/254/jmxtrans-254.rpm',
+#    }
+#
+# @example jmxtrans runs under a different user with a different config path
+#    class { 'jmxtrans':
+#      config_directory => '/etc/jmxtrans/config/',
+#      user             => 'java',
+#    }
+#
+# @param package_name [String] (optional) The package to install. Skips managing the package if undef.
+#
+# @param service_name [String] (optional) The service to manage. Skips managing the service if undef.
+#
+# @param package_source [String] (optional) A URL or local path to get a package from.
+#
+# @param package_provider [String] (optional) Used to explicitly set the provider to use to install the package.
+#
+# @param config_directory [String] Where to place JSON configurations. Defaults to '/var/lib/jmxtrans'.
+#
+# @param user [String] The user who will own the JSON configurations. Defaults to 'jmxtrans'.
 #
 class jmxtrans (
-  $package_name = $::jmxtrans::params::package_name,
-  $service_name = $::jmxtrans::params::service_name,
-) inherits ::jmxtrans::params {
-
-  # validate parameters here
-
-  class { '::jmxtrans::install': } ->
-  class { '::jmxtrans::config': } ~>
-  class { '::jmxtrans::service': } ->
-  Class['::jmxtrans']
+  Optional[String[1]] $package_name = undef,
+  Optional[String[1]] $service_name = undef,
+  Optional[String[1]] $package_source = undef,
+  Optional[String[1]] $package_provider = undef,
+  String[1] $config_directory = '/var/lib/jmxtrans',
+  String[1] $user = 'jmxtrans',
+) {
+  contain ::jmxtrans::install
+  contain ::jmxtrans::service
+  Class['::jmxtrans::install'] ~> Class['::jmxtrans::service']
 }
