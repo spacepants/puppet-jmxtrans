@@ -154,11 +154,13 @@ define jmxtrans::query (
       owner   => $::jmxtrans::user,
       mode    => '0640',
       content => jmxtrans::to_json($data_hash),
+      require => Class['::jmxtrans::install'],
       notify  => Class['::jmxtrans::service'],
     }
   } else {
     file { "${::jmxtrans::config_directory}/${title}.json":
-      ensure => absent,
+      ensure  => absent,
+      require => Class['::jmxtrans::install'],
       notify  => Class['::jmxtrans::service'],
     }
   }
