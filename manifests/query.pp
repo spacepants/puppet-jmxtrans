@@ -65,7 +65,7 @@ define jmxtrans::query (
 
   Optional[Struct[{
     host => String[1],
-    port => Integer[1]
+    port => Integer[1],
     Optional[root] => String[1],
   }]] $graphite = undef,
 
