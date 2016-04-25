@@ -23,7 +23,9 @@
 #
 # @param graphite [Hash] (optional) The Graphite configuration.  Passing a hash
 #   with `host` and `port` will configure the GraphiteWriter for each query on
-#   this object, so you don't have to do it manually.
+#   this object, so you don't have to do it manually. You may also optionally
+#   set `root` in the hash to configure the `rootPrefix` used when writing the
+#   object to Graphite.
 #
 # @param queries [Array] An array of queries to configure on the object. These
 #   consist of hashes of the form:
@@ -64,6 +66,7 @@ define jmxtrans::query (
   Optional[Struct[{
     host => String[1],
     port => Integer[1]
+    Optional[root] => String[1],
   }]] $graphite = undef,
 
   Optional[Array[Struct[{
@@ -92,11 +95,11 @@ define jmxtrans::query (
       }
 
       if $graphite {
-        $graphite_writer = [{
+        $graphite_writer = [jmxtrans::merge_notundef({
           '@class' => 'com.googlecode.jmxtrans.model.output.GraphiteWriterFactory',
           'host'   => $graphite['host'],
           'port'   => $graphite['port'],
-        }]
+        }, {'rootPrefix': $graphite['root']})]
       } else {
         $graphite_writer = []
       }
