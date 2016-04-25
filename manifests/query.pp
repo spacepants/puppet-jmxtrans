@@ -99,7 +99,7 @@ define jmxtrans::query (
           '@class' => 'com.googlecode.jmxtrans.model.output.GraphiteWriterFactory',
           'host'   => $graphite['host'],
           'port'   => $graphite['port'],
-        }, {'rootPrefix': $graphite['root']})]
+        }, {'rootPrefix' => $graphite['root']})]
       } else {
         $graphite_writer = []
       }
