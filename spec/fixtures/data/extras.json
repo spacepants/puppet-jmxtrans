@@ -1,0 +1,11 @@
+{
+  "servers": [ {
+    "host": "w2",
+    "port": "1099",
+    "username": "user",
+    "password": "hunter2",
+    "numQueryThreads": 2,
+    "alias": "puppetserver",
+    "queries": []
+  } ]
+}

@@ -1,0 +1,81 @@
+{
+  "servers": [ {
+    "port": "1099",
+    "host": "w2",
+    "alias": "puppetserver",
+    "queries": [ {
+      "outputWriters": [
+        {
+          "@class" : "com.googlecode.jmxtrans.model.output.KeyOutWriter",
+          "settings" : {
+            "outputFile": "/tmp/memory.txt",
+            "maxLogFileSize": "10MB",
+            "maxLogBackupFiles": 200,
+            "debug": true
+          }
+        },
+        {
+          "@class": "com.googlecode.jmxtrans.model.output.GraphiteWriter",
+          "port": 2003,
+          "host": "graphite.example.com"
+        },
+        {
+          "@class": "com.googlecode.jmxtrans.model.output.StdOutWriter"
+        }
+      ],
+      "obj": "java.lang:type=Memory",
+      "attr": [ "HeapMemoryUsage", "NonHeapMemoryUsage" ]
+    }, {
+      "outputWriters": [
+        {
+          "@class" : "com.googlecode.jmxtrans.model.output.KeyOutWriter",
+          "settings" : {
+            "outputFile": "/tmp/oldgen.txt",
+            "maxLogFileSize": "5MB",
+            "maxLogBackupFiles": 50,
+            "debug": false
+          }
+        },
+        {
+          "@class": "com.googlecode.jmxtrans.model.output.GraphiteWriter",
+          "port": 2003,
+          "host": "graphite.example.com"
+        },
+        {
+          "@class": "com.googlecode.jmxtrans.model.output.StdOutWriter"
+        }
+      ],
+      "resultAlias": "oldgen",
+      "obj": "java.lang:name=CMS Old Gen,type=MemoryPool",
+      "attr": [ "Usage" ]
+    }, {
+      "outputWriters": [
+        {
+          "@class": "com.googlecode.jmxtrans.model.output.GraphiteWriter",
+          "port": 2003,
+          "host": "graphite.example.com"
+        },
+        {
+          "@class": "com.googlecode.jmxtrans.model.output.StdOutWriter"
+        }
+      ],
+      "obj": "java.lang:name=ConcurrentMarkSweep,type=GarbageCollector",
+      "attr": [ "LastGcInfo" ]
+    }, {
+      "outputWriters": [
+        {
+          "@class": "com.googlecode.jmxtrans.model.output.GraphiteWriter",
+          "port": 2003,
+          "host": "graphite.example.com"
+        },
+        {
+          "@class": "com.googlecode.jmxtrans.model.output.StdOutWriter"
+        }
+      ],
+      "obj": "net.sf.ehcache:typeCacheStatistics,*",
+      "attr": [ "CacheHits", "CacheMisses", "ObjectCount" ],
+      "typeNames": [ "name" ],
+      "resultAlias": "ehcache"
+    } ]
+  } ]
+}

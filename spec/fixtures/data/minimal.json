@@ -1,0 +1,8 @@
+{
+  "servers": [ {
+    "host": "w2",
+    "port": "1099",
+    "alias": "puppetserver",
+    "queries": []
+  } ]
+}

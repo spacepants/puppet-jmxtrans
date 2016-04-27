@@ -1,0 +1,16 @@
+{
+  "servers": [ {
+    "port": "1099",
+    "host": "w2",
+    "alias": "puppetserver",
+    "queries": [ {
+      "obj": "java.lang:type=Memory",
+      "attr": [ "HeapMemoryUsage", "NonHeapMemoryUsage" ],
+      "outputWriters" : [ {
+        "@class": "com.googlecode.jmxtrans.model.output.GraphiteWriter",
+        "port": 2003,
+        "host": "graphite.example.com"
+      } ]
+    } ]
+  } ]
+}
