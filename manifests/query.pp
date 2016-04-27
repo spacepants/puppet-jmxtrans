@@ -23,12 +23,17 @@
 #
 # @param graphite [Hash] (optional) The Graphite configuration.  Passing a hash
 #   with `host` and `port` will configure the GraphiteWriter for each query on
-#   this object, so you don't have to do it manually. You may also optionally
-#   set `root` in the hash to configure the `rootPrefix` used when writing the
-#   object to Graphite.
+#   this object, so you don't have to do it manually. You may also set:
+#
+#   - `root` [String] to configure the `rootPrefix`
+#   - `boolean_as_number` [String] to configure the `booleanAsNumber`
+#   - `flush_strategy` [String] to set the `flushStrategy`
+#   - `flush_delay` [Integer] to configure the `flushDelayInSeconds`
+#   - `pool_size` [Integer] to configure the `poolSize`
 #
 # @param queries [Array] An array of queries to configure on the object. These
 #   consist of hashes of the form:
+#
 #   ~~~
 #   {
 #     'object'       => 'net.sf.ehcache:typeCacheStatistics,*',
@@ -67,6 +72,10 @@ define jmxtrans::query (
     host => String[1],
     port => Integer[1],
     Optional[root] => String[1],
+    Optional[boolean_as_number] => Boolean,
+    Optional[flush_strategy] => Enum['never', 'always', 'timeBased'],
+    Optional[flush_delay] => Integer,
+    Optional[pool_size] => Integer,
   }]] $graphite = undef,
 
   Optional[Array[Struct[{
@@ -95,11 +104,18 @@ define jmxtrans::query (
       }
 
       if $graphite {
+        $graphite_extras = {
+          'rootPrefix'      => $graphite['root'],
+          'booleanAsNumber' => $graphite['boolean_as_number'],
+          'flushStrategy'   => $graphite['flush_strategy'],
+          'flushDelay'      => $graphite['flush_delay'],
+          'poolSize'        => $graphite['pool_size'],
+        }
         $graphite_writer = [jmxtrans::merge_notundef({
           '@class' => 'com.googlecode.jmxtrans.model.output.GraphiteWriterFactory',
           'host'   => $graphite['host'],
           'port'   => $graphite['port'],
-        }, {'rootPrefix' => $graphite['root']})]
+        }, $graphite_extras)]
       } else {
         $graphite_writer = []
       }
