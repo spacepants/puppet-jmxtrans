@@ -73,9 +73,6 @@ define jmxtrans::query (
     port => Integer[1],
     Optional[root] => String[1],
     Optional[boolean_as_number] => Boolean,
-    Optional[flush_strategy] => Enum['never', 'always', 'timeBased'],
-    Optional[flush_delay] => Integer,
-    Optional[pool_size] => Integer,
   }]] $graphite = undef,
 
   Optional[Array[Struct[{
@@ -107,12 +104,9 @@ define jmxtrans::query (
         $graphite_extras = {
           'rootPrefix'          => $graphite['root'],
           'booleanAsNumber'     => $graphite['boolean_as_number'],
-          'flushStrategy'       => $graphite['flush_strategy'],
-          'flushDelayInSeconds' => $graphite['flush_delay'],
-          'poolSize'            => $graphite['pool_size'],
         }
         $graphite_writer = [jmxtrans::merge_notundef({
-          '@class' => 'com.googlecode.jmxtrans.model.output.GraphiteWriterFactory',
+          '@class' => 'com.googlecode.jmxtrans.model.output.GraphiteWriter',
           'host'   => $graphite['host'],
           'port'   => $graphite['port'],
         }, $graphite_extras)]
