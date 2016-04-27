@@ -105,11 +105,11 @@ define jmxtrans::query (
 
       if $graphite {
         $graphite_extras = {
-          'rootPrefix'      => $graphite['root'],
-          'booleanAsNumber' => $graphite['boolean_as_number'],
-          'flushStrategy'   => $graphite['flush_strategy'],
-          'flushDelay'      => $graphite['flush_delay'],
-          'poolSize'        => $graphite['pool_size'],
+          'rootPrefix'          => $graphite['root'],
+          'booleanAsNumber'     => $graphite['boolean_as_number'],
+          'flushStrategy'       => $graphite['flush_strategy'],
+          'flushDelayInSeconds' => $graphite['flush_delay'],
+          'poolSize'            => $graphite['pool_size'],
         }
         $graphite_writer = [jmxtrans::merge_notundef({
           '@class' => 'com.googlecode.jmxtrans.model.output.GraphiteWriterFactory',
