@@ -27,9 +27,6 @@
 #
 #   - `root` [String] to configure the `rootPrefix`
 #   - `boolean_as_number` [String] to configure the `booleanAsNumber`
-#   - `flush_strategy` [String] to set the `flushStrategy`
-#   - `flush_delay` [Integer] to configure the `flushDelayInSeconds`
-#   - `pool_size` [Integer] to configure the `poolSize`
 #
 # @param queries [Array] An array of queries to configure on the object. These
 #   consist of hashes of the form:
@@ -42,13 +39,11 @@
 #     'result_alias' => 'ehcache',
 #     'writers'      => [
 #       {
-#         '@class'   => 'com.googlecode.jmxtrans.model.output.KeyOutWriter',
-#         'settings' => {
-#           'outputFile'        => '/tmp/keyout2.txt',
-#           'maxLogFileSize'    => '10MB',
-#           'maxLogBackupFiles' => '200',
-#           'debug'             => true,
-#         },
+#         '@class'            => 'com.googlecode.jmxtrans.model.output.KeyOutWriter',
+#         'outputFile'        => '/tmp/keyout2.txt',
+#         'maxLogFileSize'    => '10MB',
+#         'maxLogBackupFiles' => '200',
+#         'debug'             => true,
 #       },
 #     ],
 #   }
