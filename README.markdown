@@ -138,27 +138,27 @@ anything else from the module.
 
 #### Parameters
 
-##### `package_name` [String] (optional)
+##### `package_name` (String) (optional)
 
 The package to install. Skips managing the package if undef.
 
-##### `service_name` [String] (optional)
+##### `service_name` (String) (optional)
 
 The service to manage. Skips managing the service if undef.
 
-##### `package_source` [String] (optional)
+##### `package_source` (String) (optional)
 
 A URL or local path to get a package from.
 
-##### `package_provider` [String] (optional)
+##### `package_provider` (String) (optional)
 
 Used to explicitly set the provider to use to install the package.
 
-##### `config_directory` [String]
+##### `config_directory` (String)
 
 Where to place JSON configurations. Defaults to `/var/lib/jmxtrans`.
 
-##### `user` [String]
+##### `user` (String)
 
 The user who will own the JSON configurations. Defaults to 'jmxtrans'.
 
@@ -207,50 +207,50 @@ other jmxtrans-supported writer.
 
 #### Parameters
 
-##### `title` [String]
+##### `title` (String)
  
 The resource title is used for the server `alias`.
 
-##### `ensure` [String]
+##### `ensure` (String)
  
 Whether the configuration should exist or not.
 
-##### `host` [String]
+##### `host` (String)
  
 The host to connect to JMX on. Defaults to `$title`.
 
-##### `port` [Integer]
+##### `port` (Integer)
 
 The port to connect to JMX on.
 
-##### `username` [String] (optional)
+##### `username` (String) (optional)
  
 The username to use to connect to JMX.
 
-##### `password` [String] (optional)
+##### `password` (String) (optional)
  
 The password to use to connect to JMX.
 
-##### `num_threads` [Integer] (optional)
+##### `num_threads` (Integer) (optional)
  
 How many queries to execute concurrently. Defaults to `undef`, which will
 execute the queries serially.
 
-##### `stdout` [Boolean]
+##### `stdout` (Boolean)
 
 Set to `true` to enable the StdoutWriter for each query on this object, so you
 don't have to do it manually.
 
-##### `graphite` [Hash] (optional)
+##### `graphite` (Hash) (optional)
  
 The Graphite configuration.  Passing a hash with `host` and `port` will
 configure the GraphiteWriter for each query on this object, so you don't have to
 do it manually. You may also set:
 
- - `root` [String] to configure the `rootPrefix`
- - `boolean_as_number` [String] to configure the `booleanAsNumber`
+ - `root` (String] to configure the `rootPrefix`
+ - `boolean_as_number` (String] to configure the `booleanAsNumber`
 
-##### `queries` [Array]
+##### `queries` (Array)
 
 An array of queries to configure on the object. These consist of hashes of the
 form:
