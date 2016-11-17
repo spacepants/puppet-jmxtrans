@@ -40,10 +40,15 @@ class jmxtrans (
   Optional[String[1]] $service_name = undef,
   Optional[String[1]] $package_source = undef,
   Optional[String[1]] $package_provider = undef,
+  Boolean $manage_service_file = false,
   String[1] $config_directory = '/var/lib/jmxtrans',
   String[1] $user = 'jmxtrans',
 ) {
+  contain ::jmxtrans::config
   contain ::jmxtrans::install
   contain ::jmxtrans::service
+
+  Class['::jmxtrans::install'] -> Class['::jmxtrans::config']
+  Class['::jmxtrans::config']  ~> Class['::jmxtrans::service']
   Class['::jmxtrans::install'] ~> Class['::jmxtrans::service']
 }

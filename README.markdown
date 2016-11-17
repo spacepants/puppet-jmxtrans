@@ -142,6 +142,15 @@ anything else from the module.
 
 The package to install. Skips managing the package if undef.
 
+##### `manage_service_file` (Boolean) (optional)
+
+Whether to manage the service file for jmxtrans.
+
+Currently the jmxtrans package does not have a systemd service file.
+This may be added in the future (See issue: https://github.com/jmxtrans/jmxtrans/issues/485)
+
+Skips managing the config file if undef.
+
 ##### `service_name` (String) (optional)
 
 The service to manage. Skips managing the service if undef.
@@ -224,15 +233,15 @@ The host to connect to JMX on. Defaults to `$title`.
 The port to connect to JMX on.
 
 ##### `username` (String) (optional)
- 
+
 The username to use to connect to JMX.
 
 ##### `password` (String) (optional)
- 
+
 The password to use to connect to JMX.
 
 ##### `num_threads` (Integer) (optional)
- 
+
 How many queries to execute concurrently. Defaults to `undef`, which will
 execute the queries serially.
 
@@ -242,7 +251,7 @@ Set to `true` to enable the StdoutWriter for each query on this object, so you
 don't have to do it manually.
 
 ##### `graphite` (Hash) (optional)
- 
+
 The Graphite configuration.  Passing a hash with `host` and `port` will
 configure the GraphiteWriter for each query on this object, so you don't have to
 do it manually. You may also set:
