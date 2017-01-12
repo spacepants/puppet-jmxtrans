@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'jmxtrans' do
   context 'supported operating systems' do
     on_supported_os.each do |os, facts|
-      context 'on #{os}' do
+      context "on #{os}" do
         let(:facts) do
           facts
         end
@@ -59,6 +59,76 @@ describe 'jmxtrans' do
 
           it { is_expected.to contain_package('jmxtrans').with_ensure('present') }
           it { is_expected.to contain_service('jmxtrans') }
+        end
+
+        context 'jmxtrans class with manage_service_file true' do
+          context 'with systemd' do
+            let(:facts) {
+              {
+                :path             => '/usr/local/sbin',
+                :service_provider => 'systemd',
+              }
+            }
+            let(:params) {{
+              :manage_service_file => true,
+            }}
+
+            it { is_expected.to compile.with_all_deps }
+
+            it { is_expected.to contain_file('/etc/systemd/system/jmxtrans.service') }
+          end
+
+          context 'without systemd' do
+            let(:facts) {
+              {
+                :path             => '/usr/local/sbin',
+                :service_provider => 'initd',
+              }
+            }
+
+            let(:params) {{
+              :manage_service_file => true,
+            }}
+
+            it { is_expected.to compile.with_all_deps }
+
+            it { is_expected.to contain_file('/etc/init.d/jmxtrans').with_content(/This file is originally from Java Service Wrapper 3.2.3 distribution/) }
+          end
+        end
+
+        context 'jmxtrans class with manage_service_file false' do
+          context 'with systemd' do
+            let(:facts) {
+              {
+                :path             => '/usr/local/sbin',
+                :service_provider => 'systemd',
+              }
+            }
+            let(:params) {{
+              :manage_service_file => false,
+            }}
+
+            it { is_expected.to compile.with_all_deps }
+
+            it { is_expected.to_not contain_file('/etc/systemd/system/jmxtrans.service') }
+          end
+
+          context 'without systemd' do
+            let(:facts) {
+              {
+                :path             => '/usr/local/sbin',
+                :service_provider => 'initd',
+              }
+            }
+
+            let(:params) {{
+              :manage_service_file => false,
+            }}
+
+            it { is_expected.to compile.with_all_deps }
+
+            it { is_expected.to_not contain_file('/etc/init.d/jmxtrans') }
+          end
         end
 
         context 'jmxtrans class with package provider' do
