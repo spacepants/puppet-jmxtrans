@@ -368,6 +368,10 @@ checkUser() {
 }
 
 getpid() {
+    if [ ! -d "$PIDDIR" ]
+    then
+         mkdir "$PIDDIR" && chown <%= $user %>:<%= $user %> "$PIDDIR" && chmod 0775 "$PIDDIR"
+    fi
     if [ -f "$PIDFILE" ]
     then
         if [ -r "$PIDFILE" ]
