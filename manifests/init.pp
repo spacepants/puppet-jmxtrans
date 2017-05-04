@@ -41,6 +41,7 @@ class jmxtrans (
   Optional[String[1]] $service_name = undef,
   Optional[String[1]] $package_source = undef,
   Optional[String[1]] $package_provider = undef,
+  Optional[String[1]] $working_directory = undef,
   Boolean $manage_service_file = false,
   Optional[Array[String]] $systemd_environment_vars = [],
   String[1] $systemd_template = 'jmxtrans/jmxtrans.service.epp',

@@ -10,7 +10,9 @@ User=<%= $user %>
 Environment=<%= $var %>
 <% } -%>
 <% } -%>
-WorkingDirectory=/usr/share/jmxtrans
+<% if $jmxtrans::working_directory { -%>
+WorkingDirectory=<%= $jmxtrans::working_directory %>
+<% } -%>
 PermissionsStartOnly=true
 RuntimeDirectory=jmxtrans  
 PIDFile=/var/run/jmxtrans/jmxtrans.pid
