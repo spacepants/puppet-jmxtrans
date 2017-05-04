@@ -37,6 +37,7 @@
 #
 class jmxtrans (
   Optional[String[1]] $package_name = undef,
+  Optional[String[1]] $package_version = undef,
   Optional[String[1]] $service_name = undef,
   Optional[String[1]] $package_source = undef,
   Optional[String[1]] $package_provider = undef,
