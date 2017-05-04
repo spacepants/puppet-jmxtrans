@@ -13,7 +13,7 @@ class jmxtrans::config {
           owner   => 'root',
           group   => 'root',
           mode    => '0444',
-          content => epp('jmxtrans/jmxtrans.service.epp', { 'user' => $::jmxtrans::user }),
+          content => epp($::jmxtrans::systemd_template, { 'user' => $::jmxtrans::user }),
         }
         ~>
         exec { 'jmxtrans systemctl daemon-reload':
