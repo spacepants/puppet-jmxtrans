@@ -131,6 +131,83 @@ describe 'jmxtrans' do
           end
         end
 
+        context 'jmxtrans class with systemd and service unit' do
+          context 'no changes' do
+            let(:facts) {
+              {
+                :path             => '/usr/local/sbin',
+                :service_provider => 'systemd',
+              }
+            }
+            let(:params) {{
+              :manage_service_file => true,
+            }}
+
+            it { is_expected.to compile.with_all_deps }
+
+            it { is_expected.to contain_file('/etc/systemd/system/jmxtrans.service') }
+            it { is_expected.to contain_file('/etc/systemd/system/jmxtrans.service').with_content(/ExecStart=\/usr\/share\/jmxtrans\/bin\/jmxtrans/) }
+            it { is_expected.to_not contain_file('/etc/systemd/system/jmxtrans.service').with_content(/EnvironmentFile=\/etc\/default\/jmxtrans/) }
+            it { is_expected.to_not contain_file('/etc/systemd/system/jmxtrans.service').with_content(/WorkingDirectory=\/usr\/share\/jmxtrans/) }
+          end
+
+          context 'set environment file' do
+            let(:facts) {
+              {
+                :path             => '/usr/local/sbin',
+                :service_provider => 'systemd',
+              }
+            }
+            let(:params) {{
+              :manage_service_file => true,
+              :systemd_environment_file => '/etc/default/jmxtrans',
+            }}
+
+            it { is_expected.to compile.with_all_deps }
+
+            it { is_expected.to contain_file('/etc/systemd/system/jmxtrans.service') }
+            it { is_expected.to contain_file('/etc/systemd/system/jmxtrans.service').with_content(/EnvironmentFile=\/etc\/default\/jmxtrans/) }
+          end
+
+          context 'set working directory' do
+            let(:facts) {
+              {
+                :path             => '/usr/local/sbin',
+                :service_provider => 'systemd',
+              }
+            }
+
+            let(:params) {{
+              :manage_service_file => true,
+              :working_directory => '/usr/share/jmxtrans',
+            }}
+
+            it { is_expected.to compile.with_all_deps }
+
+            it { is_expected.to contain_file('/etc/systemd/system/jmxtrans.service') }
+            it { is_expected.to contain_file('/etc/systemd/system/jmxtrans.service').with_content(/WorkingDirectory=\/usr\/share\/jmxtrans/) }
+          end
+
+          context 'set working directory' do
+            let(:facts) {
+              {
+                :path             => '/usr/local/sbin',
+                :service_provider => 'systemd',
+              }
+            }
+
+            let(:params) {{
+              :manage_service_file => true,
+              :binary_path => '/usr/share/jmxtrans/bin/jmxtrans.sh',
+            }}
+
+            it { is_expected.to compile.with_all_deps }
+
+            it { is_expected.to contain_file('/etc/systemd/system/jmxtrans.service') }
+            it { is_expected.to contain_file('/etc/systemd/system/jmxtrans.service').with_content(/ExecStart=\/usr\/share\/jmxtrans\/bin\/jmxtrans.sh/) }
+          end
+        end
+
         context 'jmxtrans class with package provider' do
           let(:params) {{
             :package_name => 'jmxtrans',
@@ -184,6 +261,26 @@ describe 'jmxtrans' do
             end
             it { is_expected.to contain_service('jmxtrans') }
           end
+        end
+
+        context 'jmxtrans class with package version' do
+          let(:params) {{
+            :package_name => 'jmxtrans',
+            :service_name => 'jmxtrans',
+            :package_version => '265'
+          }}
+
+          it { is_expected.to compile.with_all_deps }
+
+          it { is_expected.to contain_class('jmxtrans::install') }
+          it { is_expected.to contain_class('jmxtrans::service').that_subscribes_to('jmxtrans::install') }
+
+          it do
+            is_expected.to contain_package('jmxtrans').with({
+              'ensure' => '265',
+            })
+          end
+          it { is_expected.to contain_service('jmxtrans') }
         end
       end
     end
