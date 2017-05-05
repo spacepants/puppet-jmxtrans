@@ -31,6 +31,17 @@
 #
 # @param package_provider [String] (optional) Used to explicitly set the provider to use to install the package.
 #
+# @param working_directory [String] (optional) Sets the working directory for the jmxtrans processes.
+#
+# @param systemd_environment_file [String] (optional) Path to the file where the environment variables needed by
+# the jmxtrans service should be defined (e.g. '/etc/default/jmxtrans' or '/etc/sysconfig/jmxtrans').
+#
+# @param package_version [String] The version of the package to be installed. Defaults to 'present'.
+#
+# @param systemd_template [String] Template to be be used to generate the systemd unit. Defaults to 'jmxtrans/jmxtrans.service.pp'
+#
+# @param binary_path [String] Path to the jmxtrans executable. Defaults to '/usr/share/jmxtrans/bin/jmxtrans'.
+#
 # @param config_directory [String] Where to place JSON configurations. Defaults to '/var/lib/jmxtrans'.
 #
 # @param user [String] The user who will own the JSON configurations. Defaults to 'jmxtrans'.
@@ -40,7 +51,12 @@ class jmxtrans (
   Optional[String[1]] $service_name = undef,
   Optional[String[1]] $package_source = undef,
   Optional[String[1]] $package_provider = undef,
+  Optional[String[1]] $working_directory = undef,
+  Optional[String[1]] $systemd_environment_file = undef,
   Boolean $manage_service_file = false,
+  String[1] $package_version = present,
+  String[1] $systemd_template = 'jmxtrans/jmxtrans.service.epp',
+  String[1] $binary_path = '/usr/share/jmxtrans/bin/jmxtrans',
   String[1] $config_directory = '/var/lib/jmxtrans',
   String[1] $user = 'jmxtrans',
 ) {

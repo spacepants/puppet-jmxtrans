@@ -26,8 +26,9 @@ class jmxtrans::install {
     } else {
       $provider = undef
     }
+
     package { $::jmxtrans::package_name:
-      ensure   => present,
+      ensure   => $::jmxtrans::package_version,
       provider => $provider,
       source   => $::jmxtrans::package_source,
     }

@@ -5,10 +5,16 @@ After=syslog.target network.target
 [Service]
 Type=forking
 User=<%= $user %>
+<% if $systemd_environment_file  { -%>
+EnvironmentFile=<%= $systemd_environment_file %>
+<% } -%>
+<% if $working_directory { -%>
+WorkingDirectory=<%= $working_directory %>
+<% } -%>
 PermissionsStartOnly=true
 RuntimeDirectory=jmxtrans  
 PIDFile=/var/run/jmxtrans/jmxtrans.pid
-ExecStart=/usr/share/jmxtrans/bin/jmxtrans start
+ExecStart=<%= $binary_path %> start
 
 [Install]
 WantedBy=multi-user.target
