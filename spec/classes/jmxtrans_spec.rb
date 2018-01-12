@@ -12,7 +12,7 @@ describe 'jmxtrans' do
           it { is_expected.to compile.with_all_deps }
 
           it { is_expected.to contain_class('jmxtrans::install') }
-          it { is_expected.to contain_class('jmxtrans::service').that_subscribes_to('jmxtrans::install') }
+          it { is_expected.to contain_class('jmxtrans::service').that_subscribes_to('Class[jmxtrans::install]') }
 
           it { is_expected.not_to contain_package('jmxtrans') }
           it { is_expected.not_to contain_service('jmxtrans') }
@@ -26,7 +26,7 @@ describe 'jmxtrans' do
           it { is_expected.to compile.with_all_deps }
 
           it { is_expected.to contain_class('jmxtrans::install') }
-          it { is_expected.to contain_class('jmxtrans::service').that_subscribes_to('jmxtrans::install') }
+          it { is_expected.to contain_class('jmxtrans::service').that_subscribes_to('Class[jmxtrans::install]') }
 
           it { is_expected.to contain_package('jmxtrans').with_ensure('present') }
           it { is_expected.not_to contain_service('jmxtrans') }
@@ -40,7 +40,8 @@ describe 'jmxtrans' do
           it { is_expected.to compile.with_all_deps }
 
           it { is_expected.to contain_class('jmxtrans::install') }
-          it { is_expected.to contain_class('jmxtrans::service').that_subscribes_to('jmxtrans::install') }
+          it { is_expected.to contain_class('jmxtrans::service').that_subscribes_to('Class[jmxtrans::install]') }
+
 
           it { is_expected.not_to contain_package('jmxtrans') }
           it { is_expected.to contain_service('jmxtrans') }
@@ -55,7 +56,7 @@ describe 'jmxtrans' do
           it { is_expected.to compile.with_all_deps }
 
           it { is_expected.to contain_class('jmxtrans::install') }
-          it { is_expected.to contain_class('jmxtrans::service').that_subscribes_to('jmxtrans::install') }
+          it { is_expected.to contain_class('jmxtrans::service').that_subscribes_to('Class[jmxtrans::install]') }
 
           it { is_expected.to contain_package('jmxtrans').with_ensure('present') }
           it { is_expected.to contain_service('jmxtrans') }
@@ -218,7 +219,7 @@ describe 'jmxtrans' do
           it { is_expected.to compile.with_all_deps }
 
           it { is_expected.to contain_class('jmxtrans::install') }
-          it { is_expected.to contain_class('jmxtrans::service').that_subscribes_to('jmxtrans::install') }
+          it { is_expected.to contain_class('jmxtrans::service').that_subscribes_to('Class[jmxtrans::install]') }
 
           it do
             is_expected.to contain_package('jmxtrans').with({
@@ -239,7 +240,7 @@ describe 'jmxtrans' do
           it { is_expected.to compile.with_all_deps }
 
           it { is_expected.to contain_class('jmxtrans::install') }
-          it { is_expected.to contain_class('jmxtrans::service').that_subscribes_to('jmxtrans::install') }
+          it { is_expected.to contain_class('jmxtrans::service').that_subscribes_to('Class[jmxtrans::install]') }
 
           case facts[:osfamily]
           when 'Debian'
@@ -273,7 +274,7 @@ describe 'jmxtrans' do
           it { is_expected.to compile.with_all_deps }
 
           it { is_expected.to contain_class('jmxtrans::install') }
-          it { is_expected.to contain_class('jmxtrans::service').that_subscribes_to('jmxtrans::install') }
+          it { is_expected.to contain_class('jmxtrans::service').that_subscribes_to('Class[jmxtrans::install]') }
 
           it do
             is_expected.to contain_package('jmxtrans').with({
