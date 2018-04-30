@@ -21,6 +21,9 @@
 # @param stdout [Boolean] Set to `true` to enable the StdoutWriter for each
 #   query on this object, so you don't have to do it manually.
 #
+# @param pretty [Boolean] Set to `true` to 'pretty print' the json string,
+#   rather than an unformatted json blob.
+#
 # @param graphite [Hash] (optional) The Graphite configuration.  Passing a hash
 #   with `host` and `port` will configure the GraphiteWriter for each query on
 #   this object, so you don't have to do it manually. You may also set:
@@ -62,6 +65,8 @@ define jmxtrans::query (
   Optional[Integer[1]] $num_threads = undef,
 
   Boolean $stdout = false,
+
+  Boolean $pretty = false,
 
   Optional[Struct[{
     host => String[1],
@@ -158,7 +163,7 @@ define jmxtrans::query (
       ensure  => file,
       owner   => $::jmxtrans::user,
       mode    => '0640',
-      content => jmxtrans::to_json($data_hash),
+      content => jmxtrans::to_json($data_hash, $pretty),
       require => Class['::jmxtrans::install'],
       notify  => Class['::jmxtrans::service'],
     }
