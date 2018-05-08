@@ -28,9 +28,10 @@ class jmxtrans::install {
     }
 
     package { $::jmxtrans::package_name:
-      ensure   => $::jmxtrans::package_version,
-      provider => $provider,
-      source   => $::jmxtrans::package_source,
+      ensure          => $::jmxtrans::package_version,
+      provider        => $provider,
+      source          => $::jmxtrans::package_source,
+      install_options => $::jmxtrans::package_options,
     }
   }
 

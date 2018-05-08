@@ -29,6 +29,8 @@
 #
 # @param package_source [String] (optional) A URL or local path to get a package from.
 #
+# @param package_options [String] (optional) Additional options to pass to the package provider.
+#
 # @param package_provider [String] (optional) Used to explicitly set the provider to use to install the package.
 #
 # @param working_directory [String] (optional) Sets the working directory for the jmxtrans processes.
@@ -50,6 +52,7 @@ class jmxtrans (
   Optional[String[1]] $package_name = undef,
   Optional[String[1]] $service_name = undef,
   Optional[String[1]] $package_source = undef,
+  Optional[String[1]] $package_options = undef,
   Optional[String[1]] $package_provider = undef,
   Optional[String[1]] $working_directory = undef,
   Optional[String[1]] $systemd_environment_file = undef,
